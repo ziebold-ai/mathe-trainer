@@ -496,7 +496,7 @@ function weakAreas(){ // aus der Statistik: Bereiche mit Fehlerquote
    SPIELZUSTAND & SCREENS
    ==================================================================== */
 const T_OPEN=new Date();
-const REPORT_URL=''; // Web-App-URL eines Google Apps Script (Empfänger liegen dort, nicht hier). Leer = kein Versand.
+const REPORT_URL='https://script.google.com/macros/s/AKfycbxPkZTng45MGNIZqpRDmWpXt2sBTbiSUHhrBEcJau7iXBGjpGSYtrC3GSqmg7dVwsSU4g/exec'; // Web-App-URL eines Google Apps Script (Empfänger liegen dort, nicht hier). Leer = kein Versand.
 let state={tStart:null,tasks:[],i:0,inputs:[],slot:0,attempt:1,wrong:[],okCount:0,mode:'train',modId:'mul',streak:0,sound:true,locked:false};
 function show(id){['s-start','s-task','s-result'].forEach(s=>$(s).hidden=(s!==id))}
 
