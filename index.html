@@ -496,7 +496,6 @@ function weakAreas(){ // aus der Statistik: Bereiche mit Fehlerquote
    SPIELZUSTAND & SCREENS
    ==================================================================== */
 const T_OPEN=new Date();
-const REPORT_URL='https://script.google.com/macros/s/AKfycbxPkZTng45MGNIZqpRDmWpXt2sBTbiSUHhrBEcJau7iXBGjpGSYtrC3GSqmg7dVwsSU4g/exec'; // Web-App-URL eines Google Apps Script (Empfänger liegen dort, nicht hier). Leer = kein Versand.
 let state={tStart:null,tasks:[],i:0,inputs:[],slot:0,attempt:1,wrong:[],okCount:0,mode:'train',modId:'mul',streak:0,sound:true,locked:false};
 function show(id){['s-start','s-task','s-result'].forEach(s=>$(s).hidden=(s!==id))}
 
@@ -626,10 +625,14 @@ function buildReport(){
   return {subject:'Mathe-Trainer: '+NAME+' '+ok+'/'+n+' richtig ('+modeName+', '+fmtT(end)+')',body:L.join('\n')};
 }
 let lastReport=null;window.__mt={report:()=>lastReport};
-async function sendReport(auto){
-  if(!REPORT_URL)return;const r=lastReport||(lastReport=buildReport());
-  try{await fetch(REPORT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({subject:r.subject,message:r.body})})}catch(e){}
-}
+/* Lernergebnisse lokal speichern (Auswertung in admin.html, gleiches Gerät) */
+function saveResult(){try{
+  const end=new Date();const modeName=state.mode==='exam'?'Probe-Klassenarbeit':state.mode==='practice'?'Übungsrunde':'Training: '+(MODULES[state.modId]||{name:'Alles gemischt'}).name;
+  const rec={v:1,t:end.getTime(),start:state.tStart?state.tStart.getTime():end.getTime(),opened:T_OPEN.getTime(),mode:state.mode,modId:state.modId,modeName,n:state.tasks.length,ok:state.okCount,
+    tasks:state.tasks.map(t=>({text:t.text,area:t.area,mod:t.mod,key:t.key,tags:t.tags||[],answers:t.answers,given:t.given||null,result:!!t.result,how:t.result?'':explain(t)}))};
+  const all=JSON.parse(localStorage.getItem('mt-results-'+NAME)||'[]');all.push(rec);
+  localStorage.setItem('mt-results-'+NAME,JSON.stringify(all.slice(-300)));
+}catch(e){}}
 
 /* Ergebnis */
 function showResult(){
@@ -647,9 +650,8 @@ function showResult(){
   if(ratio>=.75)setTimeout(()=>{celebrate(true,true)},300);
   try{if(state.mode!=='practice'){const k='mt-best-'+NAME+'-'+state.modId;const best=Math.max(ok,parseInt(localStorage.getItem(k)||'0',10));localStorage.setItem(k,best)}}catch(e){}
   show('s-result');document.querySelector('#s-result .scroll').scrollTop=0;
-  lastReport=buildReport();
+  lastReport=buildReport();saveResult();
   try{const h=JSON.parse(localStorage.getItem('mt-history-'+NAME)||'[]');h.push({t:Date.now(),s:lastReport.subject});localStorage.setItem('mt-history-'+NAME,JSON.stringify(h.slice(-50)))}catch(e){}
-  sendReport(true);
 }
 $('btn-practice').onclick=()=>{
   // Fehleraufgaben doppelt + je eine neue Aufgabe aus jedem schwachen Bereich (adaptiv)

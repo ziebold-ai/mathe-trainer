@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFF1C9">
+<title>Mathe-Trainer – Auswertung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;800&display=swap">
+<style>
+[hidden]{display:none!important}
+:root{--bg:#FFF1C9;--card:#fff;--ink:#2B2D5B;--muted:#6F72A3;--sky:#38B6FF;--sun:#FFE133;--grass:#8BD346;--berry:#FF4F5E;--tangerine:#FF8A1E;--plum:#A855F7;--shadow:0 6px 0 rgba(43,45,91,.12);
+  --display:'Fredoka','Nunito',system-ui,sans-serif;--body:'Nunito','Fredoka',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:600;padding:16px;
+  background-image:radial-gradient(circle at 10% 10%,#FFD166 0 12%,transparent 13%),radial-gradient(circle at 90% 20%,#A6E4FF 0 10%,transparent 11%),radial-gradient(circle at 80% 90%,#C8F29A 0 14%,transparent 15%),radial-gradient(circle at 15% 85%,#FFB4C8 0 9%,transparent 10%);background-attachment:fixed}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{font-family:var(--display);font-size:1.7rem;margin:0;line-height:1.1}
+h2{font-family:var(--display);font-size:1.2rem;margin:0 0 8px;font-weight:600}
+.card{background:var(--card);border-radius:22px;padding:16px;box-shadow:var(--shadow)}
+.sub{color:var(--muted);font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.kpi{border-radius:16px;padding:12px;text-align:center;font-family:var(--display)}
+.kpi .n{font-size:2rem;font-weight:700;line-height:1}
+.kpi .t{font-size:.85rem;margin-top:4px;font-weight:500}
+.kpi.good{background:#EAF5D1;color:#5F8A1A}.kpi.bad{background:#FFE3DA;color:#C8322F}.kpi.neutral{background:#EEF2FF;color:var(--ink)}.kpi.sun{background:#FFF4B8;color:#8A6A00}
+.stars{font-size:1.6rem;letter-spacing:3px}
+.area{display:flex;align-items:center;gap:8px;font-size:1rem;margin:6px 0}
+.area .nm{min-width:12ch}
+.area .bar{flex:1;height:14px;background:#EEEDF5;border-radius:7px;overflow:hidden}
+.area .bar i{display:block;height:100%;background:var(--grass);border-radius:7px}
+.area.weak .bar i{background:var(--tangerine)}
+.area.bad .bar i{background:var(--berry)}
+.area .v{font-family:var(--display);min-width:7ch;text-align:right;font-variant-numeric:tabular-nums}
+.rec{background:#FFF9DB;border:3px dashed var(--sun);border-radius:16px;padding:12px 14px;margin:8px 0;line-height:1.45}
+.rec b{font-family:var(--display);font-size:1.1rem;font-weight:600}
+.rec.top{background:#FFE3DA;border-color:var(--berry)}
+.chip{display:inline-block;background:#EEF2FF;border-radius:10px;padding:3px 9px;margin:2px;font-family:var(--display);font-size:.95rem;font-variant-numeric:tabular-nums}
+.chip.bad{background:#FFE3DA}.chip.good{background:#EAF5D1}
+details{border-top:1px solid #EEEDF5;padding:8px 0}
+summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;list-style:none;font-size:1rem}
+summary::-webkit-details-marker{display:none}
+summary .l{display:flex;flex-direction:column;gap:2px}
+summary .d{color:var(--muted);font-size:.85rem}
+summary .s{font-family:var(--display);font-size:1.15rem;white-space:nowrap}
+.s.good{color:#5F8A1A}.s.mid{color:#B86A00}.s.bad{color:#C8322F}
+.tasks{margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+.task{display:flex;gap:8px;align-items:flex-start;padding:6px 10px;border-radius:12px;background:#F7F8FF}
+.task.wrong{background:#FFF0EB}
+.task .eq{font-family:var(--display);font-size:1.05rem;min-width:12ch;font-variant-numeric:tabular-nums}
+.task .how{color:var(--muted);font-size:.88rem}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font-family:var(--display);font-weight:600;border:0;cursor:pointer;color:var(--ink);background:#EEF2FF;border-radius:14px;padding:10px 14px;font-size:1rem;box-shadow:var(--shadow)}
+button.danger{background:#FFE3DA;color:#C8322F}
+button:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(43,45,91,.12)}
+.empty{text-align:center;padding:30px 10px;color:var(--muted);line-height:1.5}
+.note{font-size:.85rem;color:var(--muted);line-height:1.45}
+.trend{display:flex;gap:4px;align-items:flex-end;height:60px;margin-top:8px}
+.trend i{flex:1;background:var(--sky);border-radius:4px 4px 0 0;min-width:6px;position:relative}
+.trend i.low{background:var(--tangerine)}
+.trend i.exam{background:var(--plum)}
+.legend{font-size:.8rem;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>📊 Auswertung Mathe-Trainer</h1>
+    <div class="sub" id="who"></div>
+  </div>
+
+  <div class="card" id="empty" hidden>
+    <div class="empty">Noch keine Lernergebnisse auf diesem Gerät.<br><br>
+    <span class="note">Die Ergebnisse werden im Browser des Geräts gespeichert, auf dem geübt wird. Diese Seite bitte auf demselben Gerät und im selben Browser öffnen wie den Trainer.</span></div>
+  </div>
+
+  <div id="content" hidden>
+    <div class="card">
+      <h2>Gesamtergebnis</h2>
+      <div class="grid" id="kpis"></div>
+      <div id="verdict" style="margin-top:12px;line-height:1.45"></div>
+      <div class="trend" id="trend"></div>
+      <div class="legend">Verlauf der Runden (links alt, rechts neu): Prozent richtig. Lila = Probe-Klassenarbeit, orange = unter 60 %.</div>
+    </div>
+
+    <div class="card">
+      <h2>Nach Bereichen (alle Runden)</h2>
+      <div id="areas"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 Empfehlung für gezieltes Lernen</h2>
+      <div id="recs"></div>
+    </div>
+
+    <div class="card">
+      <h2>Alle Runden <span class="sub" id="count"></span></h2>
+      <div id="rounds"></div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <button id="btn-copy">📋 Bericht kopieren</button>
+        <button id="btn-export">💾 Daten exportieren</button>
+        <button id="btn-clear" class="danger">🗑️ Alle Ergebnisse löschen</button>
+      </div>
+      <p class="note">Die Daten liegen ausschließlich lokal auf diesem Gerät (Browser-Speicher). Es wird nichts an einen Server gesendet. Beim Löschen der Browserdaten gehen die Ergebnisse verloren, daher gelegentlich exportieren.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const NAME='Luis';
+const AREA_NAMES={kopf:'Kopfrechnen',mul:'1×1',div:'Geteilt',add:'Plus',sub:'Minus',vn:'Vorgänger/Nachfolger'};
+const MOD_NAMES={kopf:'Kopfrechnen',mul:'Kleines 1×1',div:'Geteilt ohne Rest',divrest:'Geteilt mit Rest',add:'Plus',sub:'Minus',vn:'Vorgänger & Nachfolger'};
+const $=id=>document.getElementById(id);
+const fmtD=t=>new Date(t).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+const fmtT=t=>new Date(t).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+const pct=(a,b)=>b?Math.round(100*a/b):0;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let all=[];
+try{all=JSON.parse(localStorage.getItem('mt-results-'+NAME)||'[]')}catch(e){all=[]}
+all.sort((a,b)=>a.t-b.t);
+$('who').textContent=NAME+' · Stand '+new Date().toLocaleString('de-DE',{dateStyle:'medium',timeStyle:'short'});
+if(!all.length){$('empty').hidden=false;return}
+$('content').hidden=false;
+
+/* ---------- Gesamt ---------- */
+const totalN=all.reduce((s,r)=>s+r.n,0),totalOk=all.reduce((s,r)=>s+r.ok,0);
+const totalPct=pct(totalOk,totalN);
+const exams=all.filter(r=>r.mode==='exam');
+const lastExam=exams[exams.length-1];
+const last5=all.slice(-5);const last5N=last5.reduce((s,r)=>s+r.n,0),last5Ok=last5.reduce((s,r)=>s+r.ok,0);
+const first5=all.slice(0,5);const f5N=first5.reduce((s,r)=>s+r.n,0),f5Ok=first5.reduce((s,r)=>s+r.ok,0);
+const minutes=all.reduce((s,r)=>s+Math.max(1,Math.round((r.t-r.start)/60000)),0);
+const days=new Set(all.map(r=>new Date(r.t).toDateString())).size;
+const stars=p=>p>=90?'⭐⭐⭐':p>=75?'⭐⭐☆':p>=50?'⭐☆☆':'☆☆☆';
+$('kpis').innerHTML=
+  '<div class="kpi '+(totalPct>=75?'good':totalPct>=50?'sun':'bad')+'"><div class="n">'+totalPct+' %</div><div class="t">richtig gesamt<br>'+totalOk+' von '+totalN+' Aufgaben</div></div>'+
+  '<div class="kpi neutral"><div class="n">'+all.length+'</div><div class="t">Runden an '+days+' Tag'+(days===1?'':'en')+'<br>ca. '+minutes+' Min. geübt</div></div>'+
+  '<div class="kpi neutral"><div class="n">'+pct(last5Ok,last5N)+' %</div><div class="t">letzte '+last5.length+' Runde'+(last5.length===1?'':'n')+'<br>'+(all.length>5?'(Start: '+pct(f5Ok,f5N)+' %)':'')+'</div></div>'+
+  '<div class="kpi sun"><div class="stars">'+stars(totalPct)+'</div><div class="t">'+(lastExam?'Letzte Klassenarbeit: '+lastExam.ok+'/'+lastExam.n+' ('+pct(lastExam.ok,lastExam.n)+' %)':'Noch keine Probe-Klassenarbeit')+'</div></div>';
+
+let verdict='';
+if(totalPct>=90)verdict='<b>Sehr sicher.</b> '+NAME+' beherrscht den Stoff weitgehend. Jetzt zählt Tempo und Routine, am besten regelmäßig kurze gemischte Runden.';
+else if(totalPct>=75)verdict='<b>Gut unterwegs.</b> Die Grundlagen sitzen, einzelne Bereiche brauchen noch gezielte Wiederholung (siehe Empfehlung).';
+else if(totalPct>=50)verdict='<b>Auf dem Weg.</b> Etwa jede dritte bis vierte Aufgabe geht noch daneben. Lieber täglich 10 Minuten in den Schwerpunktbereichen als selten lange.';
+else verdict='<b>Noch unsicher.</b> Hier lohnt es sich, die Grundlagen gemeinsam durchzugehen, bevor weiter geübt wird. Die Empfehlung unten zeigt, wo es hakt.';
+if(all.length>5){const diff=pct(last5Ok,last5N)-pct(f5Ok,f5N);if(diff>=10)verdict+=' <b>Trend: deutlich besser</b> (+'+diff+' Punkte gegenüber den ersten Runden).';else if(diff<=-10)verdict+=' <b>Trend: schwächer</b> ('+diff+' Punkte gegenüber den ersten Runden), eventuell Tagesform oder zu schwerer Modus.';else verdict+=' Trend: stabil.'}
+$('verdict').innerHTML=verdict;
+$('trend').innerHTML=all.slice(-40).map(r=>{const p=pct(r.ok,r.n);return '<i class="'+(r.mode==='exam'?'exam':p<60?'low':'')+'" style="height:'+Math.max(6,p)+'%" title="'+esc(r.modeName)+' '+r.ok+'/'+r.n+'"></i>'}).join('');
+
+/* ---------- Bereiche ---------- */
+const areas={},mods={},tags={},keys={};
+all.forEach(r=>r.tasks.forEach(t=>{
+  const bump=(o,k)=>{const s=o[k]||(o[k]={ok:0,n:0,ex:[]});s.n++;if(t.result)s.ok++;else if(s.ex.length<6&&!s.ex.includes(t.text))s.ex.push(t.text)};
+  bump(areas,t.area);bump(mods,t.mod);(t.tags||[]).forEach(g=>bump(tags,g));if(t.key)bump(keys,t.key);
+  if(!t.result){const k=keys[t.key];k.lastHow=t.how;k.text=t.text}
+}));
+$('areas').innerHTML=Object.keys(mods).sort((a,b)=>pct(mods[a].ok,mods[a].n)-pct(mods[b].ok,mods[b].n)).map(m=>{const s=mods[m];const p=pct(s.ok,s.n);return '<div class="area '+(p<50?'bad':p<75?'weak':'')+'"><span class="nm">'+esc(MOD_NAMES[m]||m)+'</span><span class="bar"><i style="width:'+p+'%"></i></span><span class="v">'+s.ok+'/'+s.n+' · '+p+'%</span></div>'}).join('');
+
+/* ---------- Empfehlungen ---------- */
+const recs=[];
+const rowStats=Object.keys(tags).filter(k=>k.startsWith('row:')).map(k=>({row:+k.slice(4),...tags[k]})).filter(s=>s.n>=3&&pct(s.ok,s.n)<75).sort((a,b)=>pct(a.ok,a.n)-pct(b.ok,b.n));
+if(rowStats.length)recs.push({lvl:pct(rowStats[0].ok,rowStats[0].n)<50?2:1,title:'Reihen festigen: '+rowStats.slice(0,3).map(s=>s.row+'er').join(', '),
+  body:'Fehlerquote '+rowStats.slice(0,3).map(s=>s.row+'er-Reihe '+(100-pct(s.ok,s.n))+' %').join(', ')+'. Empfehlung: Reihe erst laut aufsagen (vorwärts, rückwärts, dann durcheinander), danach im Trainer „Kleines 1×1" und „Geteilt" üben. Stolperaufgaben: '+rowStats.slice(0,2).flatMap(s=>s.ex).slice(0,5).map(x=>'<span class="chip bad">'+esc(x)+'</span>').join('')});
+const carry=k=>tags[k];
+if(carry('add:carry')&&carry('add:carry').n>=3&&pct(carry('add:carry').ok,carry('add:carry').n)<75&&(!carry('add:nocarry')||pct(carry('add:nocarry').ok,carry('add:nocarry').n)-pct(carry('add:carry').ok,carry('add:carry').n)>=20)){const s=carry('add:carry');const nc=carry('add:nocarry');recs.push({lvl:pct(s.ok,s.n)<50?2:1,title:'Plus mit Zehnerübergang',body:'Mit Zehnerübergang '+pct(s.ok,s.n)+' % richtig'+(nc?', ohne Übergang '+pct(nc.ok,nc.n)+' %':'')+'. Das Muster ist typisch: Der Übergang über den Zehner ist der Knackpunkt, nicht das Plusrechnen an sich. Strategie „Ergänzen bis zum Zehner" am Zahlenstrahl oder mit Rechengeld üben, z. B. 47 + 8 = 47 + 3 + 5. Beispiele: '+s.ex.slice(0,4).map(x=>'<span class="chip bad">'+esc(x)+'</span>').join('')})}
+if(carry('sub:carry')&&carry('sub:carry').n>=3&&pct(carry('sub:carry').ok,carry('sub:carry').n)<75&&(!carry('sub:nocarry')||pct(carry('sub:nocarry').ok,carry('sub:nocarry').n)-pct(carry('sub:carry').ok,carry('sub:carry').n)>=20)){const s=carry('sub:carry');const nc=carry('sub:nocarry');recs.push({lvl:pct(s.ok,s.n)<50?2:1,title:'Minus mit Zehnerübergang',body:'Mit Zehnerübergang '+pct(s.ok,s.n)+' % richtig'+(nc?', ohne Übergang '+pct(nc.ok,nc.n)+' %':'')+'. Strategie „erst bis zum Zehner, dann den Rest" üben, z. B. 62 − 7 = 62 − 2 − 5. Beispiele: '+s.ex.slice(0,4).map(x=>'<span class="chip bad">'+esc(x)+'</span>').join('')})}
+Object.keys(mods).forEach(m=>{const s=mods[m];const covered=(m==='add'&&recs.some(r=>r.title.startsWith('Plus')))||(m==='sub'&&recs.some(r=>r.title.startsWith('Minus')))||((m==='mul'||m==='div'||m==='divrest')&&recs.some(r=>r.title.startsWith('Reihen')));if(s.n>=4&&pct(s.ok,s.n)<60&&!covered)recs.push({lvl:pct(s.ok,s.n)<40?2:1,title:(MOD_NAMES[m]||m)+' grundsätzlich wiederholen',body:'Nur '+pct(s.ok,s.n)+' % richtig bei '+s.n+' Aufgaben. Dieses Thema lieber einmal gemeinsam am Tisch erklären, dann 2–3 kurze Trainingsrunden nur in diesem Modul. Beispiele: '+s.ex.slice(0,4).map(x=>'<span class="chip bad">'+esc(x)+'</span>').join('')})});
+const repeatWrong=Object.values(keys).filter(k=>k.n-k.ok>=2).sort((a,b)=>(b.n-b.ok)-(a.n-a.ok)).slice(0,8);
+if(repeatWrong.length)recs.push({lvl:1,title:'Wiederholt falsch: diese Aufgaben gezielt üben',body:'Mehrfach daneben, trotz Erklärung: '+repeatWrong.map(k=>'<span class="chip bad">'+esc(k.text)+' ('+(k.n-k.ok)+'×)</span>').join('')+'<br>Tipp: Diese Aufgaben auf Karteikarten schreiben und 3 Tage lang je einmal abfragen. Der Trainer wählt sie ohnehin häufiger aus (adaptive Wiederholung).'});
+const dontknow=all.reduce((s,r)=>s+r.tasks.filter(t=>!t.result&&(!t.given||!t.given.length)).length,0),wrongTotal=totalN-totalOk;
+if(wrongTotal>=5&&dontknow/wrongTotal>=.5)recs.push({lvl:1,title:'Oft „Weiß ich nicht"',body:dontknow+' von '+wrongTotal+' Fehlern waren Aufgaben ohne Versuch. Das deutet eher auf Unsicherheit oder Vermeidung als auf Rechenfehler hin. Ermutigen, eine Schätzung abzugeben, auch wenn sie falsch ist, und den Hilfe-Knopf nutzen, bevor „Weiß ich nicht" gedrückt wird.'});
+const exam=lastExam;if(exam&&pct(exam.ok,exam.n)<70)recs.push({lvl:1,title:'Probe-Klassenarbeit unter 70 %',body:'Letzte Probe: '+exam.ok+'/'+exam.n+'. Vor der echten Klassenarbeit noch zwei Probeläufe einplanen, dazwischen gezielt die oben genannten Bereiche. Im Prüfungsmodus gibt es keine Hilfe, deshalb erst trainieren, dann prüfen.'});
+if(!recs.length)recs.push({lvl:0,title:'Keine Schwachstelle erkennbar',body:all.length<3?'Noch zu wenige Runden für eine belastbare Empfehlung. Nach etwa 5 Runden wird die Analyse aussagekräftig.':'Alle Bereiche liegen über 75 %. Empfehlung: „Alles gemischt" und gelegentlich eine Probe-Klassenarbeit, um Tempo und Sicherheit zu halten.'});
+recs.sort((a,b)=>b.lvl-a.lvl);
+$('recs').innerHTML=recs.map((r,i)=>'<div class="rec'+(r.lvl===2?' top':'')+'"><b>'+(r.lvl===2?'❗ ':r.lvl===1?'➡️ ':'✅ ')+esc(r.title)+'</b><br>'+r.body+'</div>').join('');
+
+/* ---------- Runden ---------- */
+$('count').textContent='('+all.length+')';
+$('rounds').innerHTML=[...all].reverse().map((r,i)=>{const p=pct(r.ok,r.n);const dur=Math.max(1,Math.round((r.t-r.start)/60000));
+  const wrong=r.tasks.filter(t=>!t.result);
+  return '<details'+(i===0?' open':'')+'><summary><span class="l"><span>'+esc(r.modeName)+'</span><span class="d">'+fmtD(r.t)+' · '+fmtT(r.start)+'–'+fmtT(r.t)+' Uhr · ca. '+dur+' Min.'+(r.opened&&r.start-r.opened>120000?' · App geöffnet '+fmtT(r.opened):'')+'</span></span><span class="s '+(p>=75?'good':p>=50?'mid':'bad')+'">'+r.ok+'/'+r.n+' · '+p+' %</span></summary>'+
+    '<div class="tasks">'+(wrong.length?wrong.map(t=>'<div class="task wrong"><span class="eq">✗ '+esc(t.text)+'</span><span><span>richtig: <b>'+esc(fmtAns(t,t.answers))+'</b> · '+(t.given&&t.given.length?'getippt: '+esc(fmtAns(t,t.given)):'„Weiß ich nicht"')+'</span>'+(t.how?'<br><span class="how">'+esc(t.how)+'</span>':'')+'</span></div>').join(''):'<div class="task"><span>Alles richtig 🎉</span></div>')+
+    (r.tasks.length-wrong.length?'<div style="margin-top:4px">'+r.tasks.filter(t=>t.result).map(t=>'<span class="chip good">✓ '+esc(t.text)+'</span>').join('')+'</div>':'')+'</div></details>'}).join('');
+function fmtAns(t,a){return t.mod==='divrest'?a[0]+' Rest '+a[1]:a.join(' | ')}
+
+/* ---------- Aktionen ---------- */
+function textReport(){const L=[];L.push('Mathe-Trainer – Auswertung '+NAME+' ('+new Date().toLocaleDateString('de-DE')+')');L.push('Gesamt: '+totalOk+'/'+totalN+' richtig ('+totalPct+' %), '+all.length+' Runden, ca. '+minutes+' Min.');L.push('');
+  L.push('Nach Modulen:');Object.keys(mods).forEach(m=>L.push('  '+(MOD_NAMES[m]||m)+': '+mods[m].ok+'/'+mods[m].n+' ('+pct(mods[m].ok,mods[m].n)+' %)'));L.push('');
+  L.push('Empfehlungen:');recs.forEach(r=>L.push('  • '+r.title+': '+r.body.replace(/<[^>]+>/g,'')));L.push('');
+  [...all].reverse().forEach(r=>{L.push(fmtD(r.t)+' '+fmtT(r.t)+' – '+r.modeName+': '+r.ok+'/'+r.n);r.tasks.filter(t=>!t.result).forEach(t=>L.push('    ✗ '+t.text+' → '+fmtAns(t,t.answers)+(t.given&&t.given.length?' (getippt '+fmtAns(t,t.given)+')':' (Weiß ich nicht)')))});
+  return L.join('\n')}
+$('btn-copy').onclick=async()=>{const txt=textReport();try{if(navigator.share){await navigator.share({title:'Mathe-Trainer Auswertung',text:txt});return}}catch(e){}try{await navigator.clipboard.writeText(txt);$('btn-copy').textContent='✓ Kopiert'}catch(e){prompt('Bericht kopieren:',txt)}};
+$('btn-export').onclick=()=>{const blob=new Blob([JSON.stringify(all,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mathe-trainer-'+NAME.toLowerCase()+'-'+new Date().toISOString().slice(0,10)+'.json';a.click()};
+$('btn-clear').onclick=()=>{if(confirm('Wirklich alle gespeicherten Ergebnisse auf diesem Gerät löschen?')){localStorage.removeItem('mt-results-'+NAME);location.reload()}};
+})();
+</script>
+</body>
+</html>
